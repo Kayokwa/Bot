@@ -7,6 +7,6 @@ namespace Bot.Models
 {
     public class UserProfile
     {
-        private string Name { get ; set; }
+        public string Name { get ; set; }
     }
 }
