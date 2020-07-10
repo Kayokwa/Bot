@@ -12,17 +12,21 @@ namespace Bot.Services
         #region Variables 
         //State Variables
 
+        public ConversationState ConversationState { get; }
         public UserState UserState { get; }
 
         //IDs
         public static string UserProfileId { get; } = $"{nameof(StateService)}.UserProfile";
+        public static string ConversationDataId { get; } = $"{nameof(StateService)}.ConversationData";
 
         //Accessors
         public IStatePropertyAccessor<UserProfile> UserProfileAccessor { get; set; }
+        public IStatePropertyAccessor<ConversationData> ConversationDataAccessor { get; set; }
         #endregion
 
-        public StateService(UserState userState)
+        public StateService(UserState userState, ConversationState conversationState)
         {
+            ConversationState = conversationState ?? throw new ArgumentException(nameof(conversationState));
             UserState = userState ?? throw new ArgumentException(nameof(userState));
 
             InitializeAccssors();
@@ -32,6 +36,8 @@ namespace Bot.Services
         {
             //Initialize User State
             UserProfileAccessor = UserState.CreateProperty<UserProfile>(UserProfileId);
+            //Initialize User State
+            ConversationDataAccessor = ConversationState.CreateProperty<ConversationData>(ConversationDataId);
         }
     }
 }
